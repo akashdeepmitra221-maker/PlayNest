@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 
 MYSQL_HOST = os.getenv("host")
 MYSQL_USER = os.getenv("user")              # your MySQL username
