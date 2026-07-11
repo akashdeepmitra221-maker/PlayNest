@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="dashboard-screen">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-list">
+                    {% for category, message in messages %}
+                        <li class="flash {{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <div class="dashboard-card">
+            <p class="eyebrow" style="color: var(--signal); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;">Status: verified</p>
+            <h1>Welcome, {{ session['full_name'] }}. You are a solo player.</h1>
+            <p>You're logged in. This page is protected by a server-side session, so it's only reachable while you're authenticated.</p>
+            <a class="logout-link" href="{{ url_for('logout') }}">Log out →</a>
+        </div>
+    </div>
+</body>
+</html>

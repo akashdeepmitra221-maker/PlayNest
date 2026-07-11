@@ -1,0 +1,372 @@
+/* ---------------------------------------------------------------------------
+   Design tokens
+   Palette:  ink #0B1220, panel #121A2B, line #24314C, fog #8B96AC,
+             paper #EDEFF4, signal #3FD0C9 (verified/accent), alert #F2A65A
+   Type:     display -> 'Space Grotesk' (technical, geometric)
+             body    -> 'Inter'
+             mono    -> 'JetBrains Mono' (status readouts, field hints)
+--------------------------------------------------------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    --ink: #0B1220;
+    --panel: #121A2B;
+    --panel-raised: #17203380;
+    --line: #24314C;
+    --fog: #8B96AC;
+    --paper: #EDEFF4;
+    --signal: #3FD0C9;
+    --signal-dim: #3fd0c92a;
+    --alert: #F2A65A;
+    --alert-dim: #f2a65a22;
+    --radius: 10px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+}
+
+/* ---------------------------------------------------------------------------
+   Layout: split panel -- left = "access panel" signature, right = form card
+--------------------------------------------------------------------------- */
+
+.screen {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 480px);
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.access-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 56px 48px;
+    background:
+        radial-gradient(circle at 15% 20%, var(--signal-dim), transparent 45%),
+        var(--panel);
+    border-right: 1px solid var(--line);
+    overflow: hidden;
+}
+
+.access-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 32px 32px;
+    opacity: 0.25;
+    mask-image: radial-gradient(circle at 20% 30%, black, transparent 70%);
+}
+
+.brand {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+}
+
+.brand .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 0 4px var(--signal-dim);
+}
+
+.panel-copy {
+    position: relative;
+    max-width: 380px;
+}
+
+.eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin: 0 0 16px;
+}
+
+.panel-copy h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.4rem;
+    line-height: 1.15;
+    margin: 0 0 16px;
+}
+
+.panel-copy p {
+    color: var(--fog);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.status-readout {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--fog);
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #0b122080;
+    width: fit-content;
+}
+
+.status-readout .pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--signal);
+    animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--signal-dim); }
+    50% { opacity: 0.6; box-shadow: 0 0 0 6px transparent; }
+}
+
+/* ---------------------------------------------------------------------------
+   Form card
+--------------------------------------------------------------------------- */
+
+.form-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 56px 48px;
+    background: var(--ink);
+}
+
+.form-head {
+    margin-bottom: 32px;
+}
+
+.form-head h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.6rem;
+    margin: 0 0 8px;
+}
+
+.form-head p {
+    color: var(--fog);
+    margin: 0;
+    font-size: 0.92rem;
+}
+
+.form-head p a {
+    color: var(--signal);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.form-head p a:hover {
+    text-decoration: underline;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fog);
+}
+
+.field input {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field input::placeholder {
+    color: #5b6780;
+}
+
+.field input:focus {
+    outline: none;
+    border-color: var(--signal);
+    box-shadow: 0 0 0 3px var(--signal-dim);
+}
+
+.field-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #5b6780;
+}
+
+.field-hint.error {
+    color: var(--alert);
+}
+
+.submit-btn {
+    margin-top: 8px;
+    padding: 13px 18px;
+    border: none;
+    border-radius: var(--radius);
+    background: var(--signal);
+    color: #06201e;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.12s ease, background 0.15s ease;
+}
+.radio-grp {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--paper);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--fog);
+}
+
+.submit-btn:hover {
+    background: #58dad4;
+    transform: translateY(-1px);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* ---------------------------------------------------------------------------
+   Flash messages
+--------------------------------------------------------------------------- */
+
+.flash-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.flash {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    padding: 11px 14px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+}
+
+.flash.error {
+    background: var(--alert-dim);
+    border-color: #f2a65a55;
+    color: var(--alert);
+}
+
+.flash.success {
+    background: var(--signal-dim);
+    border-color: #3fd0c955;
+    color: var(--signal);
+}
+
+/* ---------------------------------------------------------------------------
+   Dashboard
+--------------------------------------------------------------------------- */
+
+.dashboard-screen {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 32px;
+    width: 100%;
+}
+
+.dashboard-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 40px;
+}
+
+.dashboard-card h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    margin-top: 0;
+}
+
+.dashboard-card p {
+    color: var(--fog);
+    line-height: 1.6;
+}
+
+.logout-link {
+    display: inline-block;
+    margin-top: 24px;
+    color: var(--signal);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    border: 1px solid var(--line);
+    padding: 10px 16px;
+    border-radius: var(--radius);
+}
+
+.logout-link:hover {
+    border-color: var(--signal);
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive
+--------------------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+    .screen {
+        grid-template-columns: 1fr;
+    }
+    .access-panel {
+        display: none;
+    }
+    .form-wrap {
+        padding: 40px 24px;
+    }
+}
