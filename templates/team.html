@@ -20,7 +20,7 @@
 
         <div class="dashboard-card">
             <p class="eyebrow" style="color: var(--signal); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;">Status: verified</p>
-            <h1>Welcome, {{ full_name }}. You are a team player.</h1>
+            <h1>Welcome, {{ session['full_name'] }}. You are a team player.</h1>
             <p>You're logged in. This page is protected by a server-side session, so it's only reachable while you're authenticated.</p>
             <a class="logout-link" href="{{ url_for('logout') }}">Log out →</a>
         </div>
