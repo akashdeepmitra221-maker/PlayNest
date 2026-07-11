@@ -35,7 +35,8 @@ def get_db_connection():
             password=config.MYSQL_PASSWORD,
             database=config.MYSQL_DB,
             port=config.MYSQL_PORT,
-            ca=config.CA,
+            ssl_verify_cert=True,
+            ssl_ca=config.CA
         )
         return connection
     except Error as e:
